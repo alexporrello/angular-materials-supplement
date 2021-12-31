@@ -1,0 +1,45 @@
+@import 'variables';
+
+.hide {
+    height: 0;
+    width: 100%;
+    position: fixed;
+    top: 108px;
+    left: 0;
+    z-index: 2;
+    cursor: pointer;
+    transition: height .5s ease;
+    background: rgba($primary, .75);
+    display: flex;
+}
+
+.show {
+    height: calc(100% - 108px);
+    transition: height .5s ease;
+}
+
+.content-wrapper {
+    height: calc(100% - 108px);
+    width: 100%;
+    position: fixed;
+    top: 108px;
+    left: 0;
+    z-index: 3;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity .5s ease, transform 1s ease;
+    transform: scale(0, 0);
+    display: flex;
+}
+
+.content {
+    margin: auto;
+    width: fit-content;
+    height: fit-content;
+}
+
+.content-show {
+    opacity: 100%;
+    transform: scale(1, 1);
+    transition: opacity .5s ease, transform 1s ease;
+}

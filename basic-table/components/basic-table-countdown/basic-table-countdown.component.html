@@ -1,0 +1,29 @@
+<div class="failed" *ngIf="failed">
+  <mat-icon color="warn">priority_high</mat-icon>
+  <p>Failed to load data.</p>
+</div>
+<div class="basic-table" *ngIf="!failed">
+  <div class="table">
+     <app-basic-table
+        [tableDefinition]="tableDefinition"
+        [data]="tableData"
+        [loading]="loading"
+        [rowsPerPage]="rowsPerPage"
+        [searchable]="searchable"
+        (rowClick)="rowClick.emit($event)"
+        (cellClick)="cellClick.emit($event)">
+     </app-basic-table>
+  </div>
+  <div class="refresh" *ngIf="lastRefresh">
+     <div class="refresh__in">
+        Refreshing
+        <span class="refresh__in--progress" *ngIf="refreshCountdown > 0">
+           in {{ refreshCountdown }}
+        </span>
+        <span class="refresh__in--progress" *ngIf="refreshCountdown <= 0">
+           <mat-spinner diameter="14"></mat-spinner>
+        </span>
+     </div>
+     <div>Refreshed at {{ lastRefresh }}</div>
+  </div>
+</div>

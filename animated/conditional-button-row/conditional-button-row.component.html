@@ -1,0 +1,14 @@
+<div id="button-row">
+  <ng-container *ngFor="let button of buttons">
+    <div
+      class="button-wrapper"
+      [class.show]="button.shouldShow">
+      <button
+        mat-raised-button
+        (click)="button.click()"
+        [color]="button.color">
+        {{ button.text }}
+      </button>
+    </div>
+  </ng-container>
+</div>

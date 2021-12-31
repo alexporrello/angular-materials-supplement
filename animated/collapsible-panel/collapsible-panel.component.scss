@@ -1,0 +1,43 @@
+@import 'variables';
+
+#panel {
+    box-shadow: $soft-shadow;
+    border-radius: $card-border-radius;
+}
+
+#toolbar {
+    display: flex;
+    cursor: pointer;
+    padding: 1rem;
+
+    h1 {
+        font-family: "Poppins", sans-serif;
+        font-weight: 400;
+        font-size: 1rem;
+        margin: 0;
+    }
+
+    #icon-container {
+        margin: auto 1rem auto auto;
+    }
+}
+
+.content {
+    max-height: 0;
+    transition: max-height;
+    transition-duration: 0.25s;
+    transition-timing-function: ease-out;
+    overflow: hidden;
+
+    #inner-content {
+        margin: 1rem;
+    }
+}
+
+.show-content {
+    max-height: 1000px;
+    overflow: hidden;
+    transition: max-height;
+    transition-duration: 0.25s;
+    transition-timing-function: ease-in;
+}

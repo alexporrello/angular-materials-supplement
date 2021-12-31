@@ -1,0 +1,34 @@
+.basic-table {
+  height: calc(100% - 5px);
+}
+.table {
+  height: calc(100% - 25px);
+}
+.refresh {
+  height: 25px;
+  font-size: 0.8em;
+  text-align: right;
+  padding-top: 5px;
+  margin-right: 7px;
+  overflow: hidden;
+  display: flex;
+  margin-left: auto;
+}
+
+.refresh--spinner {
+  margin-left: auto;
+  padding-right: 5px;
+  border-right: solid 1px darkgray;
+}
+
+.refresh__in {
+  display: flex;
+  margin: 0 5px 5px auto;
+  padding: 0 0 0 5px;
+  border-right: solid 1px darkgray;
+}
+
+.refresh__in--progress {
+  margin-left: 3px;
+  padding-right: 5px;
+}

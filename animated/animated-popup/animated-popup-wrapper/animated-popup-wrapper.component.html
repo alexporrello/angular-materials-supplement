@@ -1,0 +1,6 @@
+<div id="trigger-wrapper" [animPopupTrigger]="popup">
+  <ng-content [animPopupTrigger]="popup" select="[trigger]"></ng-content>
+</div>
+<app-animated-popup #popup>
+  <ng-content #content select="[content]"></ng-content>
+</app-animated-popup>

@@ -1,0 +1,154 @@
+@import 'variables';
+
+#sections {
+	display: flex;
+	flex-wrap: wrap;
+	width: 100%;
+
+	.section {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+		gap: 1rem;
+
+		h2 {
+			font-family: "Open Sans", sans-serif;
+			font-size: 1rem;
+			font-weight: 500;
+		}
+
+		.row {
+			display: flex;
+			gap: 1rem;
+
+			.item-wrapper:nth-last-child(1) {
+				margin-right: 0;
+			}
+		}
+	}
+}
+
+.no-rows {
+	display: flex;
+	flex-wrap: wrap;
+	width: 100%;
+	gap: 1rem;
+
+	.item-wrapper {
+		width: auto;
+	}
+
+	.card-view {
+		flex-grow: 1;
+		flex-basis: 15%;
+	}
+}
+
+.item-wrapper {
+	position: relative;
+	flex-wrap: wrap;
+	flex-grow: 1;
+	min-width: 15px;
+	font-size: .9rem;
+	flex-basis: 15%;
+
+	.card-error {
+		background: $warn;
+		position: absolute;
+		z-index: 1;
+		width: 5px;
+		height: 0;
+		border-top-left-radius: 4px;
+		border-bottom-left-radius: 4px;
+		transition: height .15s ease-in;
+	}
+
+	.card-error-show {
+		height: 100%;
+	}
+
+	.item {
+		width: 100%;
+	}
+
+	.toggle {
+		margin: auto;
+	}
+
+	.elevated {
+		background: $z1-background !important;
+	}
+
+	.rfb-input {
+		display: flex;
+		flex-direction: column;
+		transition: box-shadow .5s ease-in;
+		transition: background .5s ease-in;
+	
+		.label {
+			font-size: .7rem;
+			margin-bottom: .5rem;
+		}
+
+		.label-focus {
+			color: $primary;
+		}
+
+		.label-error {
+			color: $warn;
+		}
+		
+		.content {
+			display: flex;
+			width: 100%;
+    		overflow: hidden;
+			cursor: pointer;
+
+			::ng-deep .mat-select-value {
+				max-width: inherit;
+			}
+		}
+
+		.suffix {
+			font-size: .9rem;
+			white-space: nowrap;
+		}
+	}
+	
+	.color-underline {
+		border-color: $primary !important;
+	}
+	
+	.error-underline {
+		border-color: $warn !important;
+	}
+	
+	.card-view {
+		transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+		padding: 0.5rem 1rem;
+		border-radius: 4px;
+		background: #fff;
+		color: rgba(0, 0, 0, 0.87);
+		flex-wrap: wrap;
+		flex-grow: 1;
+		min-width: 15px;
+		min-height: 40px;
+	}
+	
+	.plain-view {
+		border-bottom: solid 1px lightgray;
+	}
+	
+	.disabled {
+		background-color: #F0F0F0;
+		box-shadow: none;
+		transition: box-shadow .35s ease-out;
+		transition: background .35s ease-out;
+		color: $disabled-text;
+	}
+	
+	::ng-deep .mat-chip-list-wrapper {
+		z-index: 1;
+		min-height: 40px;
+	}
+}

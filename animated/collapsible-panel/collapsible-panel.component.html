@@ -1,0 +1,20 @@
+<div id="panel">
+  <div id="toolbar" (click)="open = !open">
+    <h1>{{ title || '' }}</h1>
+    <div id="icon-container">
+      <app-animated-icon [icon]="icon" [state]="open">
+      </app-animated-icon>
+    </div>
+  </div>
+  <div
+    class="content"
+    [class.show-content]="open"
+    [style.transition-duration]="animationDuration + 's'">
+    <div id="inner-content">
+      <ng-content select="[body]"></ng-content>
+      <app-collapsible-panel-actions>
+        <ng-content select="[actions]"></ng-content>
+      </app-collapsible-panel-actions>
+    </div>
+  </div>
+</div>

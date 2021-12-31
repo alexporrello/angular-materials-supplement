@@ -1,0 +1,161 @@
+<div *ngIf="data && template"
+    class="component-container"
+    [class.card-view-injected]="injected && cardView"
+    [class.standard-view-injected]="injected && !cardView"
+    [class.left-right-border]="!injected && !cardView"
+    [class.card-container]="!injected && cardView">
+    <div class="search-bar" [class.search-bar-raised]="cardView" *ngIf="searchable">
+        <app-search-bar
+            class="search-bar"
+            [elevated]="searchElevated"
+            [data]="data"
+            [tableDefinition]="template"
+            (results)="processSearchResults($event)">
+        </app-search-bar>
+    </div>
+    <div
+        class="table-container"
+        [class.card-view]="cardView"
+        [class.card-container]="cardView && !injected"
+        [class.table-view]="!cardView"
+        [class.injected-view]="injected"
+        [class.fill-height]="fullPageTable">
+        <table *ngIf="template">
+            <thead>
+                <tr *ngIf="template.groups && template.groups.length > 1">
+                    <th *ngFor="let group of template.groups"
+                        [attr.colspan]="group.colspan"
+                        [class.tiny-header]="tinyHeaders">
+                        {{ group.groupLabel }}
+                </tr>
+                <tr>
+                    <th *ngFor="let cell of template.cells"
+                        matRipple
+                        [class.tiny-header]="tinyHeaders"
+                        [class.th-icon]="isIconType(cell)"
+                        [class.no-border-right]="!cell.header.borderRight"
+                        [class.pointer]="sortable"
+                        [attr.colspan]="cell.header.colspan"
+                        [style.display]="cell.header.hide"
+                        [style.textAlign]="cell.header.textAlign"
+                        [style.backgroundColor]="cell.header.bgColor"
+                        [style.color]="cell.header.color"
+                        [style.fontSize]="cell.header.hideText ? 0 : ''"
+                        [style.fontWeight]="cell.header.fontWeight"
+                        [style.minWidth.px]="cell.header.minWidth"
+                        [style.width.px]="cell.header.width"
+                        (click)="sortByColumn(cell)">
+                        <span class="sort">
+                            <span class="sort__label-icon">{{ cell.label }}</span>
+                            <span class="sort__label-icon" *ngIf="cell.sort">
+                                <mat-icon *ngIf="sortingDown(cell.sortDirection)">expand_more</mat-icon>
+                                <mat-icon *ngIf="!sortingDown(cell.sortDirection)">expand_less</mat-icon>
+                            </span>
+                        </span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let row of rows; let j = index">
+                    <tr
+                        class="card-row"
+                        [attr.background]="template.rowColor"
+                        [attr.color]="template.color">
+                        <ng-container *ngFor="let cell of template.cells; let i = index">
+                            <ng-container [ngSwitch]="cell.cellType">
+                                <td *ngSwitchCase="cellType.animatedIcon"class="pointer td-icon icon-cell"
+                                    (click)="cell.disabledField && row[cell.disabledField] ? '' : cell.body.clickEvent.emit({row: row, cell: cell})">
+                                    <div
+                                        class="card-content animated-icon"
+                                        [class.first-cell]="i === 0"
+                                        [class.last-cell]="i === template.cells.length-1">
+                                        <app-animated-icon
+                                            [icon]="cell.body.animatedIcon.icon"
+                                            [state]="row[cell.field]">
+                                        </app-animated-icon>
+                                    </div>
+                                </td>
+                                <td *ngSwitchCase="cellType.icon" class="pointer td-icon"
+                                    [attr.disabled]="cell.disabledField && row[cell.disabledField]"
+                                    (click)="cell.disabledField && row[cell.disabledField] ? '' : cell.body.clickEvent.emit({row: row, cell: cell})">
+                                    <div matRipple
+                                        class="card-content animated-icon icon-cell"
+                                        [class.first-cell]="i === 0"
+                                        [class.last-cell]="i === template.cells.length-1"
+                                        [matRippleCentered]="true"
+                                        [matRippleDisabled]="cell.disabledField && row[cell.disabledField]">
+                                        <mat-icon
+                                            [color]="cell.disabledField && row[cell.disabledField] ? '' : cell.body.iconColor"
+                                            [class.disabled]="cell.disabledField && row[cell.disabledField]">
+                                            {{cell.body.icon}}
+                                        </mat-icon>
+                                    </div>
+                                </td>
+                                <td *ngSwitchDefault
+                                    [attr.colspan]="cell.body.colspan"
+                                    [style.display]="cell.body.hide"
+                                    [style.textAlign]="cell.body.textAlign"
+                                    [style.backgroundColor]="cell.body.bgColor"
+                                    [style.color]="cell.body.color"
+                                    [style.fontSize]="cell.body.hideText ? 0 : ''"
+                                    [style.fontWeight]="cell.body.fontWeight"
+                                    [style.minWidth.px]="cell.body.minWidth"
+                                    [style.width.px]="cell.body.width"
+                                    [class.pointer]="cell.body.cursorType === 'pointer'"
+                                    [class.no-border-right]="!cell.body.borderRight"
+                                    (click)="emitClick(row, cell, row[cell.field])">
+                                    <div matRipple
+                                        class="card-content"
+                                        [class.first-cell]="i === 0"
+                                        [class.last-cell]="i === template.cells.length-1"
+                                        [matRippleCentered]="true"
+                                        [matRippleDisabled]="!allowCellClick(cell)">
+                                        <div class="vertical-middle">
+                                            {{ processCell(row, cell) }}
+                                        </div>
+                                    </div>
+                                </td>
+                            </ng-container>
+                        </ng-container>
+                    </tr>
+                    <tr>
+                        <td class="injected" [attr.colspan]="template.cells.length">
+                            <div [class]="row.openInjectedData ? 'injected show-injected' : 'injected'">
+                                <app-basic-table
+                                    *ngIf="row.showInjectedData"
+                                    [data]="row.projected ? row.projected : []"
+                                    [tableDefinition]="template.injectedContent"
+                                    [cardView]="cardView"
+                                    [injected]="true">
+                                </app-basic-table>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+        <div class="no-records-text" *ngIf="template && data && data.length === 0">
+            {{ noRecordsMessage }}
+        </div>
+        <div *ngIf="loading && !data" class="spinner-container">
+            <mat-spinner [diameter]="50"></mat-spinner>
+        </div>
+    </div>
+    <div class="pager" *ngIf="rowsPerPage">
+        <p>{{ pagerText }}</p>
+
+        <div class="pager-text">
+            <button mat-icon-button (click)="pageLeft()">
+                <mat-icon>chevron_left</mat-icon>
+            </button>
+            <button
+                *ngFor="let number of pagerButtons"
+                [class]="number === pageNum ? 'selected' : ''"
+                (click)="setPageNumber(number)">{{ number + 1 }}
+            </button>
+            <button mat-icon-button (click)="pageRight()">
+                <mat-icon>chevron_right</mat-icon>
+            </button>
+        </div>
+    </div>
+</div>

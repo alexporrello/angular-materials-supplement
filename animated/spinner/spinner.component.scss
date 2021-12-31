@@ -1,0 +1,68 @@
+@import 'variables';
+
+.spinner {
+    display: flex;
+}
+
+.icon {
+    margin: auto;
+    transform: scale(0, 0);
+}
+
+.icon-show {
+    transform: scale(1, 1);
+    transition: transform .1s ease-in;
+}
+
+.spin {
+    position: absolute;
+    display: inline-block;
+    border-style: solid;
+    border-color: transparent;
+    border-radius: 50%;
+    border-top-color: $primary;
+    animation: spin 1s infinite;
+    transition: border-color .25s ease-out;
+}
+
+.success {
+    transition: border-color .25s ease-out;
+    border-color: transparent;
+}
+
+.errored {
+    transition: border-color .25s ease-out;
+    border-color: transparent;
+}
+
+.white {
+    border-top-color: white;
+    color: white;
+}
+
+.primary {
+    border-top-color: $primary;
+    color: $primary;
+}
+
+.accent {
+    border-top-color: $accent;
+    color: $accent;
+}
+
+.warn {
+    border-top-color: tomato;
+    color: tomato;
+}
+
+@keyframes spin {
+	to {
+		-webkit-transform: rotate(360deg);
+	}
+}
+
+@-webkit-keyframes spin {
+	to {
+		-webkit-transform: rotate(360deg);
+	}
+}

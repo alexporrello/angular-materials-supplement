@@ -1,0 +1,8 @@
+<div
+  class="popup"
+  [style.height]="show ? height + 'px' : 0"
+  [style.top]="y"
+  [style.left]="x">
+  <ng-content></ng-content>
+</div>
+<div *ngIf="show" id="overlay" (click)="handleClose()"></div>

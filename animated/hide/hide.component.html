@@ -1,0 +1,9 @@
+<div class="content-wrapper" [class.content-show]="show" [style.color]="textColor">
+  <div class="content">
+    <ng-content></ng-content>
+  </div>
+</div>
+<div
+  class="hide"
+  [class.show]="show">
+</div>
