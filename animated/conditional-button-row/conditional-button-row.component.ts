@@ -1,12 +1,11 @@
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Subscription } from 'rxjs/Subscription';
+import { BehaviorSubject, Subscription } from 'rxjs';
+
 
 export class ConditionalButton {
 
   private _show: BehaviorSubject<boolean>;
-  private _toDestory: Subscription;
+  private _toDestory?: Subscription;
 
   constructor(
     /** The button's text. */
@@ -64,11 +63,11 @@ export class ConditionalButton {
   styleUrls: ['./conditional-button-row.component.scss']
 })
 export class ConditionalButtonRowComponent implements OnDestroy {
-  @Input() buttons: ConditionalButton[];
+  @Input() buttons?: ConditionalButton[];
 
   constructor() { }
 
   ngOnDestroy(): void {
-    this.buttons.forEach(button => button.destory());
+    this.buttons?.forEach(button => button.destory());
   }
 }

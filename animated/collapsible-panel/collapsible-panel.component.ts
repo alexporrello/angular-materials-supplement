@@ -7,11 +7,11 @@ import { AnimatedIcon } from '../animated-icon/animated-icon.component';
   styleUrls: ['./collapsible-panel.component.scss']
 })
 export class CollapsiblePanelComponent implements OnInit, OnChanges {
-  @Input() title: string;
+  @Input() title?: string;
   @Input() open = false;
   @Input() animationDuration = .5;
 
-  @ViewChild('content') content: ElementRef;
+  @ViewChild('content') content?: ElementRef;
 
   public icon = AnimatedIcon.EXPAND_SORT;
 

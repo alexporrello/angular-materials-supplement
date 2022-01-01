@@ -1,83 +1,72 @@
-@import 'variables';
+@import "variables";
 
 .primary {
-    color: $primary;
+  color: #00000097;
 }
 
 .accent {
-    color: $accent;
+  color: $accent;
 }
 
 .warn {
-    color: $warn;
-}
-
-.spin {
-	transition: transform .1s;
-    width: 16px;
-    height: 16px;
-    margin: auto;
-}
-
-.spin-animate {
-    transition: transform .1s;
-	transform: rotate(180deg);
+  color: $warn;
 }
 
 .spin-container {
-    width: 100%;
-    height: 100%;
-    display: flex;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  cursor: pointer;
 }
 
 .jump-and-shake {
-    width: 24px;
-    height: 24px;
-    transition: transform .1s;
-    margin: auto;
+  transition: transform 0.1s;
+  margin: auto;
 }
 
 .jump-and-shake-animate {
-    animation-delay: 1s;
-    transition: transform .1s;
-    transform: translate(10%, -50%) rotate(45deg);
+  animation-delay: 1s;
+  transition: transform 0.1s;
+  transform: translate(10%, -50%) rotate(45deg);
 }
 
 .jump {
-    width: 24px;
-    height: 24px;
-    transition: transform .1s;
-    margin: auto;
+  transition: transform 0.1s;
+  margin: auto;
 }
 
 .jump-animate {
-    animation-delay: 1s;
-    transition: transform .1s;
-    transform: translate(0, -50%);
+  animation-delay: 1s;
+  transition: transform 0.1s;
+  transform: translate(0, -50%);
 }
 
 .fall {
-    width: 24px;
-    height: 24px;
-    transition: transform .1s;
-    margin: auto;
+  transition: transform 0.1s;
+  margin: auto;
 }
 
 .fall-animate {
-    animation-delay: 1s;
-    transition: transform .1s;
-    transform: translate(0, 50%);
+  animation-delay: 1s;
+  transition: transform 0.1s;
+  transform: translate(0, 50%);
 }
 
 .spin-45 {
-	// transition: transform .1s;
-    width: 24px;
-    height: 24px;
-    margin: auto;
-    transform: rotate(-45deg);
+  margin: auto;
+  transform: rotate(-45deg);
 }
 
 .spin-45-animate {
-    transition: transform .1s;
-	transform: rotate(135deg);
+  transition: transform 0.1s;
+  transform: rotate(135deg);
+}
+
+.spin {
+  margin: auto;
+}
+
+.spin-animate {
+  transition: transform 0.5s;
+  transform: rotate(360deg);
 }

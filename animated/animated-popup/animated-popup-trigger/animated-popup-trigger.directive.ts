@@ -24,11 +24,11 @@ export class AnimatedPopupTriggerDirective {
 
   /** Handles click events on the trigger. */
   public handleClick(event: MouseEvent): void {
-    if (this.popup.show) {
+    if (this.popup?.show) {
       this.popup.handleClose();
       this.close.emit('fart');
     } else {
-      this.popup.show = true;
+      this.popup ? this.popup.show = true : '';
     }
   }
 
@@ -42,11 +42,13 @@ export class AnimatedPopupTriggerDirective {
     }
 
     this._popup = popup;
-    this.popup.height = this._host.nativeElement.offsetHeight;
-    this._popup.x = this._host.nativeElement.offsetLeft;
-    this._popup.y = this._host.nativeElement.offsetTop + this.popup.height;
+    if (this._popup) {
+      this._popup.height = this._host.nativeElement.offsetHeight;
+      this._popup.x = this._host.nativeElement.offsetLeft;
+      this._popup.y = this._host.nativeElement.offsetTop + this._popup.height;
+    }
   }
-  private _popup: AnimatedPopupComponent;
+  private _popup?: AnimatedPopupComponent;
 
   ngOnDestroy(): void {
     // throw new Error('Method not implemented.');

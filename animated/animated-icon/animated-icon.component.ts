@@ -6,19 +6,24 @@ import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, SimpleCh
   styleUrls: ['./animated-icon.component.scss']
 })
 export class AnimatedIconComponent implements OnChanges {
-  @Input() icon: AnimatedIcon;
+  @Input() icon!: AnimatedIcon;
+  @Input() animation!: Animation;
+
+  @Input() size = 24;
+  @Input() toggleState = false;
   @Input() state = true;
   @Input() primaryColor = AnimatedIconColor.PRIMARY;
   @Input() secondaryColor = AnimatedIconColor.ACCENT;
 
   @Output() click = new EventEmitter();
 
-  @ViewChild('subscribe') subscribe: ElementRef;
-  @ViewChild('download') download: ElementRef;
-  @ViewChild('link') link: ElementRef;
+  @ViewChild('iconDiv') private _iconRef!: ElementRef;
 
   /** Used to access enum in template. */
   public iconType = AnimatedIcon;
+
+  /** Used to access enum in template. */
+  public animations = Animation;
 
   /** Used to access enum in template. */
   public currentState = AnimatedIconState;
@@ -28,44 +33,66 @@ export class AnimatedIconComponent implements OnChanges {
 
   constructor() { }
 
-  get color(): string {
-    return this.state ? this.primaryColor : this.secondaryColor;
-  }
-
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.state && this.state) {
       this.animate = this.state;
     }
   }
 
-  public animateSubscribe() {
-    this.subscribe.nativeElement.classList.add('jump-and-shake-animate');
-    setTimeout(() => {
-      this.state = !this.state;
-      this.animate = !this.animate;
-      this.subscribe.nativeElement.classList.remove('jump-and-shake-animate');
-    }, 50);
+  public get className(): string {
+    switch (this.animation) {
+      case (Animation.JUMP_AND_SHAKE):
+        return 'jump-and-shake ' + this.color;
+      case (Animation.FALL):
+        return 'fall ' + this.color;
+      case (Animation.SPIN_45):
+        return 'spin-45 ' + this.color;
+      case (Animation.SPIN):
+        return 'spin ' + this.color;
+      default:
+        return 'spin-45 ' + this.color;
+    }
   }
 
-  public animateDownload() {
-    this.download.nativeElement.classList.add('fall-animate');
-    setTimeout(() => {
-      this.animate = !this.animate;
-      this.download.nativeElement.classList.remove('fall-animate');
-    }, 50);
+  public get color(): string {
+    return this.state ? this.primaryColor : this.secondaryColor;
   }
 
-  public animateSpin() {
-    this.link.nativeElement.classList.add('spin-45-animate');
+  public runAnimation(): void {
+    switch (this.animation) {
+      case (Animation.JUMP_AND_SHAKE):
+        this._animate('jump-and-shake-animate');
+        break;
+      case (Animation.FALL):
+        this._animate('fall-animate', false);
+        break;
+      case (Animation.SPIN_45):
+        this._animate('spin-45-animate', false);
+        break;
+      case (Animation.SPIN):
+        this._animate('spin-animate', false, 100);
+    }
+  }
+
+  private _animate(className: string, stateChange = true, timeout = 50): void {
+    this._iconRef.nativeElement.classList.add(className);
     setTimeout(() => {
+      if (stateChange) {
+        this.state = !this.state;
+      }
+
       this.animate = !this.animate;
-      this.link.nativeElement.classList.remove('spin-45-animate');
-    }, 50);
+      this._iconRef.nativeElement.classList.remove(className);
+    }, timeout);
   }
 }
 
 export enum AnimatedIcon {
-  SUBSCRIBE, EXPAND_SORT, DOWNLOAD, LINK
+  SUBSCRIBE, EXPAND_SORT, DOWNLOAD, LINK, DASHBOARD, ADD, PERSON, CLOSE
+}
+
+export enum Animation {
+  JUMP_AND_SHAKE, FALL, SPIN_45, SPIN
 }
 
 export enum AnimatedIconState {

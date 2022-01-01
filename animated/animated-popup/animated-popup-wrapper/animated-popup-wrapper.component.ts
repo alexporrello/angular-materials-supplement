@@ -6,12 +6,12 @@ import { AfterContentInit, Component, ElementRef, OnChanges, OnInit, SimpleChang
   styleUrls: ['./animated-popup-wrapper.component.scss']
 })
 export class AnimatedPopupWrapperComponent implements OnInit, OnChanges, AfterContentInit {
-  @ViewChild('content') content: ElementRef;
+  @ViewChild('content') content?: ElementRef;
 
   constructor() { }
 
   ngAfterContentInit(): void {
-    console.log(this.content.nativeElement.offsetHeight);
+    console.log(this.content?.nativeElement.offsetHeight);
   }
 
   ngOnChanges(changes: SimpleChanges): void {

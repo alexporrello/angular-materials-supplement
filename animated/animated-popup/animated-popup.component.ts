@@ -10,10 +10,10 @@ export class AnimatedPopupComponent {
 
   constructor() { }
 
-  public x: number;
-  public y: number;
+  public x?: number;
+  public y?: number;
 
-  private _height: number;
+  private _height?: number;
 
   public get height(): number {
     return this._height || 0;

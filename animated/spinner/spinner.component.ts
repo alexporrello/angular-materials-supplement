@@ -7,8 +7,8 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class SpinnerComponent {
   @Input() diameter = 50;
-  @Input() success: boolean;
-  @Input() errored: boolean;
+  @Input() success?: boolean;
+  @Input() errored?: boolean;
   @Input() color = 'primary';
 
   constructor() { }
