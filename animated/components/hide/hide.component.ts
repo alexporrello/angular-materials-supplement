@@ -7,7 +7,7 @@ import { Component, Input } from '@angular/core';
 })
 export class HideComponent {
   @Input() show = false;
-  @Input() textColor = 'white';
+  @Input() textColor = 'black';
 
   constructor() { }
 }
